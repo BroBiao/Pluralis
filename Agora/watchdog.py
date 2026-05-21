@@ -37,6 +37,7 @@ def monitor():
         # 核心判断逻辑
         if "Shutting down" in last_line or "[ERROR]" in last_line:
             print(f"[{time.ctime()}] 检测到服务已关闭，准备重启...")
+            time.sleep(10)
             run_start()
             # 启动后等待一段时间，让新日志生成，避免瞬时重复触发
             time.sleep(60) 
