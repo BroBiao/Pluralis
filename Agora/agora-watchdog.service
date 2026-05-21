@@ -1,0 +1,30 @@
+[Unit]
+Description=Agora Training Server Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+
+# 设定脚本所在目录，以便它能正确读到本地的 config 文件和 key
+WorkingDirectory=/root/agora
+
+# 如果有虚拟环境，请使用虚拟环境内的 python 绝对路径
+ExecStart=/usr/bin/python3 watchdog.py
+
+# 环境变量设置
+Environment=PYTHONUNBUFFERED=1
+# 确保脚本能找到用户的家目录（有些脚本会去 ~/.agora 找配置）
+Environment=HOME=/root
+
+# 自动重启配置
+Restart=always
+RestartSec=60
+
+# 日志输出到 journald
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
